@@ -1,0 +1,36 @@
+.button {
+  display: inline-block;
+  background: $primary-color;
+  color: #eeeeee;
+  padding: 7px 20px;
+  text-decoration: none;
+  width: 138px;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 2px;
+  transition: transform 0.3s;
+  margin-top: 20px;
+  font-weight: 700;
+
+  &:hover {
+    transform: scale(1.1);
+    text-decoration: none;
+    color: #fff;
+  }
+}
+
+.read-more {
+  display: inline;
+  color: $read-more-color;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+@media (max-width: 991px) {
+  .button {
+    font-size: 18px;
+    width: 161px;
+  }
+}

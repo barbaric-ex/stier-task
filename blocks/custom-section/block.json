@@ -1,0 +1,15 @@
+{
+  "apiVersion": 2,
+  "name": "custom/section",
+  "title": "Custom Section",
+  "category": "layout",
+  "icon": "layout",
+  "description": "A custom Gutenberg block with two layout variations.",
+  "supports": {
+    "align": ["wide", "full"]
+  },
+  "editorScript": "file:./edit.js",
+  "editorStyle": "file:./style.scss",
+  "style": "file:./style.scss",
+  "render": "file:./index.php"
+}
