@@ -15,10 +15,10 @@ function styles(done) {
 
 function watch(done) {
   browserSync.init({
-    proxy: "http://stier-task.localhost", // Povezuje se s lokalnim WP serverom
-    port: 3002, // Održava isti port za BrowserSync
-    open: true, // Automatski otvara u browseru
-    notify: false, // Isključuje obaveštenja
+    proxy: "http://stier-task.localhost",
+    port: 3002,
+    open: true,
+    notify: false,
   });
 
   gulp.watch("sass/**/*.scss", styles);
