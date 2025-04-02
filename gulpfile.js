@@ -1,32 +1,60 @@
 const gulp = require("gulp");
 const sass = require("gulp-sass")(require("sass"));
-const browserSync = require("browser-sync").create();
+const postcss = require("gulp-postcss");
+const autoprefixer = require("autoprefixer");
+const cssnano = require("cssnano");
+const concat = require("gulp-concat");
+const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
+const sourcemaps = require("gulp-sourcemaps");
+const plumber = require("gulp-plumber");
 
-function styles(done) {
+// Putanje
+const paths = {
+  styles: {
+    src: "assets/scss/**/*.scss",
+    dest: "assets/css/",
+  },
+  scripts: {
+    src: "assets/js/**/*.js",
+    dest: "assets/js/min/",
+  },
+};
+
+// Compile SCSS -> CSS
+function styles() {
   return gulp
-    .src("sass/**/*.scss")
+    .src(paths.styles.src)
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
     .pipe(sass().on("error", sass.logError))
-    .pipe(rename("style.css"))
-    .pipe(gulp.dest("css"))
-    .pipe(browserSync.stream());
-  done();
+    .pipe(postcss([autoprefixer(), cssnano()]))
+    .pipe(rename({ suffix: ".min" }))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest(paths.styles.dest));
 }
 
-function watch(done) {
-  browserSync.init({
-    proxy: "http://stier-task.localhost",
-    port: 3002,
-    open: true,
-    notify: false,
-  });
-
-  gulp.watch("sass/**/*.scss", styles);
-  gulp.watch("css/style.css").on("change", browserSync.reload);
-  gulp.watch("js/*.js").on("change", browserSync.reload);
-  gulp.watch("./**/*.php").on("change", browserSync.reload);
-
-  done();
+// Minify & Concatenate JS
+function scripts() {
+  return gulp
+    .src(paths.scripts.src)
+    .pipe(plumber())
+    .pipe(sourcemaps.init())
+    .pipe(concat("main.js"))
+    .pipe(uglify())
+    .pipe(rename({ suffix: ".min" }))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest(paths.scripts.dest));
 }
 
+// Watch
+function watch() {
+  gulp.watch(paths.styles.src, styles);
+  gulp.watch(paths.scripts.src, scripts);
+}
+
+// Default task
+exports.styles = styles;
+exports.scripts = scripts;
 exports.watch = watch;
+exports.default = gulp.series(gulp.parallel(styles, scripts), watch);

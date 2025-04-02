@@ -5,7 +5,8 @@ function custom_theme_scripts()
     // Enqueue CSS files
     wp_enqueue_style('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css', array(), '4.0.0');
     wp_enqueue_style('animate', get_template_directory_uri() . '/css/animate.css', array(), '1.0.0');
-    wp_enqueue_style('main-style', get_template_directory_uri() . '/css/style.css', array(), '1.0.0');
+    wp_enqueue_style('main-style', get_template_directory_uri() . '/assets/css/style.min.css', array(), '1.0.0');
+    wp_enqueue_style('main-style', get_template_directory_uri() . '/assets/css/style.min.css.map', array(), '1.0.0');
 
     // Deregister default WordPress jQuery and load a custom version
     wp_deregister_script('jquery');
@@ -14,7 +15,12 @@ function custom_theme_scripts()
     // Enqueue JavaScript files
     wp_enqueue_script('bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array('jquery'), '4.0.0', true);
     wp_enqueue_script('jquery-easing', get_template_directory_uri() . '/js/jquery.easing.min.js', array('jquery'), '1.0.0', true);
-    wp_enqueue_script('custom-js', get_template_directory_uri() . '/js/custom.js', array('jquery'), '1.0.0', true);
+
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/min/main.min.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('custom-js', get_template_directory_uri() . '/assets/js/min/main.min.js.map', array('jquery'), '1.0.0', true);
+
+
+
     wp_enqueue_script('wow', get_template_directory_uri() . '/js/wow.js', array('jquery'), '1.0.0', true);
 }
 
